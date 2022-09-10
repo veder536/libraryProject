@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     'authentication',
     'django.contrib.sites',
-    'crispy_forms',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
