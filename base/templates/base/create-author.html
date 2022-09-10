@@ -1,0 +1,38 @@
+
+{% extends 'base/base.html' %}
+
+{% block header %}
+    <title>Create an author</title>
+{% endblock %}
+    
+{% block content %}
+
+    <div class="container" style="width: 45%;">
+        <form action="" method="POST">
+
+            {%csrf_token%}
+            <div class="mb-3">
+                <label for="name" class="form-label">Author Name</label>
+                    {{form.name}}
+                </div>
+                <div class="mb-3">
+                <label for="birth_place" class="form-label">Birth Place</label>
+                    {{form.birth_place}}
+                </div>
+                <div class="mb-3">
+                    <label for="birth_date" class="form-label">Birth Date</label>
+                    {{ form.birth_date }}
+                </div>
+                <div class="mb-3">
+                    <label for="birth_date" class="form-label">Death Date</label>
+                    {{ form.death_date }}
+                </div>
+                <div class="text-danger">
+                    {% for error in form.dob.errors %}{{ error }}<br/>{% endfor %}
+                </div>
+                <input class="btn btn-primary" type="submit" value="sumbit">
+            </div>
+        </form>
+    </div>
+    
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base/base.html' %}
+
+
+{% block header %}
+    <title>Edit a book</title>
+{% endblock %}
+
+{% block content %}
+    
+    
+    <div class="container" style="width: 45%;">
+        <form action="" method="POST">
+            {%csrf_token%}
+           <div class="mb-3">
+                <label for="author" class="form-label">Author</label>
+                
+                <select class="js-example-basic-multiple form-control" name="author" multiple="multiple">
+                    <!-- {% for text in form.author %}
+                        <option value="">{{ text }}</option>
+                    {% endfor %} -->
+                    {% for value, text in form.author.field.choices %}
+                        <option value="{{ value }}">{{ text }}</option>
+                    {% endfor %}                                      
+                </select>
+            </div class="mb-3">
+            
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                {{form.name}}
+            </div class="mb-3">
+            <div class="mb-3">
+                <label for="code" class="form-label">Code</label>
+                {{form.code}}
+            </div>
+            <div class="mb-3">
+                <label for="relise_date" class="form-label">Relise Date</label>
+                {{form.relise_date}}
+            </div>
+            <div class="mb-3">
+                <label for="relise_country" class="form-label">Relise Country</label>
+                {{form.relise_country}}
+            </div class="mb-3">
+            <div class="mb-3">
+                <label for="genre" class="form-label">Genre</label>
+                {{form.genre}}
+            </div>
+            <div class="mb-3">
+                <label for="is_available" class="form-label">Available</label>
+                {{form.is_available}}
+            </div class="mb-3">
+            <div class="mb-3">
+                <label for="available_copies" class="form-label">Copies Available</label>
+                {{form.available_copies}}
+            </div>
+            <div class="text-danger">
+                {% for error in form.dob.errors %}{{ error }}<br/>{% endfor %}
+            </div class="mb-3">
+            <input class="btn btn-primary" type="submit" value="sumbit">
+        </form>
+        
+    </div>
+{% endblock %}
+    
+{% block javascript%}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+        });
+
+      
+    </script>
+{% endblock %}
+

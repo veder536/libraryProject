@@ -1,0 +1,22 @@
+
+{% extends 'base/base.html' %}
+
+{% block header %}
+    <title>Verify Email</title>
+{% endblock %}
+    
+{% block content %}
+
+    <div class="container" style="width: 45%;">
+        <form action="{% url 'base:verify_email' code %}" method="GET">
+
+            <div class="mb-3">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Enter Code</label>
+                    <input type="text" value="{{ code }}" class="form-control" name="code">
+                </div>
+            </div>
+        </form>
+    </div>
+    
+{% endblock %}

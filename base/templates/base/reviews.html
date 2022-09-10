@@ -1,0 +1,29 @@
+
+{% extends 'base/base.html' %}
+
+{% block header %}
+    <title>Reviews</title>
+{% endblock %}
+    
+{% block content %}
+
+    <div class="container" style="width: 45%;">
+            <ul class="list-group">
+                {% for review in reviews %}
+                    
+                        <li class="list-group-item" >{{review.body}} 
+                            <br>
+                            <br>
+                            <a href="{% url 'base:aproove-review' review.id %}" class="btn btn-success btn-sm">Aproove</a>
+                            <br>                            
+                            <a href="{% url 'base:deletereview' review.id %}" class="btn btn-danger btn-sm">Delete</a>                            
+                        </li>
+                    </a>
+                    
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+{% endblock %}
+

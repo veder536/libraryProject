@@ -1,0 +1,60 @@
+
+
+<!DOCTYPE html>
+{% load static %}
+
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'base/css/bootstrap.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'base/css/mycss.css' %}">
+    
+    <html lang="en">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {% include 'layouts/navbar.html' %} 
+
+   {% block content %}
+   
+   {% endblock %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'base/js/bootstrap.js' %}"></script>
+    {% block javascript %}
+    <script>
+         $("#register-user").on("submit", function(event){
+            event.preventDefault();
+
+            var data = $(this).serialize();
+            
+            $.ajax({
+                url: "{% url 'authentication:register' %}",
+                type: "POST",
+                data: data,
+
+                success: function (json) {
+                    window.location.href = "{% url 'base:home' %}"
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert(xhr.responseJSON.message)
+                },
+            });
+        });
+        
+        function confirmDelete(id, name) {
+            if(confirm('are you sure you want to delete author ' + name) == true){
+                window.location.href = "/delete-author/" + id
+            }
+        }
+        function confirmDeleteBook(id, name) {
+            if(confirm('are you sure you want to delete book ' + name) == true){
+                window.location.href = "/delete-book/" + id
+            }
+        }
+    </script>
+    {% endblock %}
+</body>
+</html>

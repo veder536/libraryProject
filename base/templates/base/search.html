@@ -1,0 +1,115 @@
+
+{% extends 'base/base.html' %}
+
+{% block header %}
+    <title>search</title>
+{% endblock %}
+    
+{% block content %}
+{% if books %}
+    <div class="container" style="width: 45%;">
+        <div class="card" style="width: 30;">
+            <form action="{% url 'base:search' %}" method="GET" style="width: 30%;" >
+                <div class="mb-3">
+                    <label for="search" class="form-label">Search</label>
+                    <input type="text" class="form-control" name="search" autocomplete="off">
+                    <input type="hidden" name="search_for" value="book">
+                </div>
+            </form>
+            <ul class="list-group">
+                {% for  book in books %}
+                    <a href="{% url 'base:showbook' book.id %}" class="link-dark" style="text-decoration: none;">
+                        <li class="list-group-item" >{{book.name}} 
+                            <br>
+                            <br>
+                            <a href="{% url 'base:editbook' book.id %}" class="btn btn-primary btn-sm">Edit</a>
+                            <button class="btn btn-danger" onclick="confirmDeleteBook('{{book.id}}', '{{book.name}}')" class="btn btn-danger btn-sm">Delete</button>
+                        </li>
+                    </a>
+                    
+                {% endfor %}
+            </ul>
+            <a href="{% url 'base:booklist' %}" class="btn btn-primary">Back</a>
+        </div>
+    </div>
+{% elif authors %}
+    <div class="container" style="width: 45%;">
+        <div class="card" style="width: 30;">
+            <form action="{% url 'base:search' %}" method="GET" style="width: 30%;" >
+                <div class="mb-3">
+                    <label for="search" class="form-label">Search</label>
+                    <input type="text" class="form-control" name="search" autocomplete="off">
+                    <input type="hidden" name="Search" value="author">
+                </div>
+            </form>
+            <ul class="list-group">
+                {% for  author in authors %}
+                    <a href="{% url 'base:showauthor' author.id %}" class="link-dark" style="text-decoration: none;">
+                        <li class="list-group-item" >{{author.name}} 
+                            <br>
+                            <br>
+                            <a href="{% url 'base:editauthor' author.id %}" class="btn btn-primary btn-sm">Edit</a>
+                            <button class="btn btn-danger" onclick="confirmDelete('{{author.id}}', '{{author.name}}')" class="btn btn-danger btn-sm">Delete</button>
+                        </li>
+                    </a>
+                    
+                {% endfor %}
+            </ul>
+            <a href="{% url 'base:authorlist' %}" class="btn btn-primary">Back</a>
+        </div>
+
+    </div>
+{%else%}    
+    <div class="container" style="width: 45%;">
+        <div class="card" style="width: 30;">
+            <form action="{% url 'base:search' %}" method="GET" style="width: 30%;" >
+                <div class="mb-3">
+                    <label for="search" class="form-label">Search</label>
+                    <input type="text" class="form-control" name="search" autocomplete="off">
+                    <input type="hidden" name="Search" value="author">
+                </div>
+            </form>
+            <ul class="list-group">
+                <h5>Authors</h5>
+                {% for  author in authors %}
+                    <a href="{% url 'base:showauthor' author.id %}" class="link-dark" style="text-decoration: none;">
+                        <li class="list-group-item" >{{author.name}} 
+                            <br>
+                            <br>
+                            <a href="{% url 'base:editauthor' author.id %}" class="btn btn-primary btn-sm">Edit</a>
+                            <button class="btn btn-danger" onclick="confirmDelete('{{author.id}}', '{{author.name}}')" class="btn btn-danger btn-sm">Delete</button>
+                        </li>
+                    </a>
+                    
+                {% endfor %}
+            </ul>
+            <div class="card" style="width: 30;">
+                <form action="{% url 'base:search' %}" method="GET" style="width: 30%;" >
+                    <div class="mb-3">
+                        <label for="search" class="form-label">Search</label>
+                        <input type="text" class="form-control" name="search" autocomplete="off">
+                        <input type="hidden" name="search_for" value="book">
+                    </div>
+                </form>
+                <ul class="list-group">
+                    <h5>Books</h5>
+                    {% for  book in books %}
+                        <a href="{% url 'base:showbook' book.id %}" class="link-dark" style="text-decoration: none;">
+                            <li class="list-group-item" >{{book.name}} 
+                                <br>
+                                <br>
+                                <a href="{% url 'base:editbook' book.id %}" class="btn btn-primary btn-sm">Edit</a>
+                                <button class="btn btn-danger" onclick="confirmDeleteBook('{{book.id}}', '{{book.name}}')" class="btn btn-danger btn-sm">Delete</button>>
+                            </li>
+                        </a>
+                        
+                    {% endfor %}
+                </ul>
+            </div>
+    
+        </div>
+    </div>
+        
+{% endif %}
+
+{% endblock %}

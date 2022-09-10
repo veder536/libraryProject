@@ -1,0 +1,32 @@
+
+{% extends 'base/base.html' %}
+
+{% block header %}
+    <title>Edit rent</title>
+{% endblock %}
+    
+{% block content %}
+
+    <div class="container" style="width: 45%;">
+        <form action="" method="POST">
+
+            {%csrf_token%}
+            <div class="mb-3">
+                
+                <div class="text-danger">
+                    {% for error in form.dob.errors %}{{ error }}<br/>{% endfor %}
+                </div>
+                <div class="mb-3">
+                    <label for="check_out" class="form-label">Check Out</label>
+                    {{ form.return_date }}
+                </div>
+                <div class="mb-3">
+                    <label for="check_in" class="form-label">Check In</label>
+                    {{ form.check_in }}
+                </div>
+                <input class="btn btn-primary" type="submit" value="sumbit">
+            </div>
+        </form>
+    </div>
+    
+{% endblock %}

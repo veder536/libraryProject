@@ -1,0 +1,20 @@
+
+{% extends 'base/base.html' %}
+
+{% block header %}
+    <title>Home</title>
+{% endblock %}
+
+
+    
+{% block content %}
+
+    {% if request.user.is_superuser %}
+        <a href="{% url 'base:create-author' %}" class="btn btm-primary">Create Author</a>
+        <a href="{% url 'base:create-book' %}" class="btn btm-primary">Create Book</a>
+        <a href="{% url 'base:authorlist' %}" class="btn btm-primary">author list</a>
+        <a href="{% url 'base:booklist' %}" class="btn btm-primary">book list</a>
+        <a href="{% url 'base:reviews' %}" class="btn btm-primary">Review aproove</a>
+    {% endif %}
+    
+{% endblock %}

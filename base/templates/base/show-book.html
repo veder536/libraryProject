@@ -1,0 +1,87 @@
+{% extends 'base/base.html' %}
+
+{% block header %}
+    <title>Show Book</title>
+{% endblock %}
+    
+{% block content %}
+
+    
+<div class="container" style="width: 45%;">
+    <div class="card" style="width: 30;">
+        {% for info in book %}
+        
+        <p class="h4"> {{info.name}} </p>
+        <br>
+        {% for author in info.author.all %}
+            {{ author.name }}
+        {% endfor %}
+        <!-- <p class="h6"> authors: {{info.author}}</p> -->
+        <br>
+        <p class="h6"> Code: {{info.code}} </p>
+        <br>
+        <p class="h6"> Relise Date: {{info.relise_date}} </p>
+        <br>
+        <p class="h6"> Relise Date: {{info.relise_country}} </p>
+        <br>
+        <p class="h6"> Genre: {{info.genre}} </p>
+        <br>
+    
+        
+        {% if info.book_image %}
+            <img src="{{ info.book_image.url }}" width="50%" alt="">
+        {% endif %}
+        {% if info.is_available %}
+            <a href="{% url 'base:rentbook' info.id %}" class="btn btn-primary">Rent</a>
+        {% else %}
+            <button type="button" class="btn btn-secondary btn-lg" disabled>Not available for rent</button>
+        {% endif %}
+        
+        <p>rented by:</p>
+            {% for rent in rented_by %}
+                
+                <p>{{ rent.user.username }} <a href="{% url 'base:changerent' rent.user_id info.id%}" class="btn btn-primary">Change Rent</a></p>
+                
+            {% endfor %}
+            <br>
+            <br>
+            <div class="mb-3">
+                <form action="{% url 'base:writereview' info.id %}" method="POST">
+                    {%csrf_token%}
+                    <div class="form-group">   
+                        <label for="body">Write a Review</label>
+                        <textarea class="form-control" name="body" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <br>
+                        <input class="btn btn-primary" type="submit" value="sumbit">
+                    </div>
+                </form>
+            </div>
+        {% endfor %}
+        <ul class="list-group">
+            {% for review in writtenReviews %}
+                    <li class="list-group-item" >{{review.body}}
+                        {% if user.id == review.user.id %}
+                            <a href="{% url 'base:editreview' review.id %}" class="btn btn-primary btn-sm">Edit</a> 
+                            <br>
+                            <br>
+                        {% endif %}
+                    </li>
+                </a>
+                
+            {% endfor %}
+        </ul>
+        <ul class="list-group">
+            {% for  userreview in userpendingreviews %}
+                    <li class="list-group-item" >{{userreview.body}} 
+                        <br>
+                        <b>pending</b>
+                        <br>
+                    </li>
+                </a>
+                
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+    
+{% endblock %}

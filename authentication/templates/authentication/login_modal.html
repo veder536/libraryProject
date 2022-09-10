@@ -1,0 +1,33 @@
+<div class="modal fade" id="login_modal" tabindex="-1" aria-labelledby="login_modalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" >
+            <form method="POST" action="{% url 'authentication:login' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_login">Email:</label>
+                    <input type="email" class="form-control" name="email" placeholder="Email" autocomplete="username" maxlength="150" required id="id_login">
+                </div>
+                <div class="mb-3">
+                    <label for="id_password">Password:</label>
+                    <input type="password" class="form-control" name="password" placeholder="Password" autocomplete="current-password" required id="id_password">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" name="remember" id="id_remember">
+                    <label class="form-check-label" for="id_remember">Remember Me:</label>
+                </div>
+                <div class="mb-3 float-right">
+                    <button type="submit" class="btn btn-primary float-right">Login</button>
+                </div>
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>

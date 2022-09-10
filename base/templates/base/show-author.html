@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+
+{% block header %}
+    <title>show Author</title>
+{% endblock %}
+    
+{% block content %}
+
+    
+<div class="container" style="width: 45%;">
+    <div class="card" style="width: 30;">
+        {% for info in author %}
+        
+        <p class="h6"> {{info.name}} </p>
+        <br>
+        <p class="h6"> Birth Place: {{info.birth_place}} </p>
+        <br>
+        <p class="h6"> Birth Date: {{info.birth_date}} </p>
+        <br>
+        <p class="h6"> Death Date: {{info.death_date}} </p>
+        {% endfor %}
+    </div>
+</div>
+    
+{% endblock %}
