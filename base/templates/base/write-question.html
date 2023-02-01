@@ -1,0 +1,27 @@
+
+{% extends 'base/base.html' %}
+
+{% block header %}
+    <title>Write a Question</title>
+{% endblock %}
+    
+{% block content %}
+
+    <div class="container" style="width: 45%;">
+        <form action="{% url 'base:writequestion' %}" method="POST">
+
+            {%csrf_token%}
+            <div class="mb-3">
+                <label for="id_username">Question:</label>
+                <textarea class="form-control" name="question" placeholder="write your Question" maxlength="150">
+                    
+                </textarea>  
+            </div>
+            <div class="text-danger">
+                {% for error in form.dob.errors %}{{ error }}<br/>{% endfor %}
+                <input class="btn btn-primary" type="submit" value="sumbit">
+            </div>
+        </form>
+    </div>
+    
+{% endblock %}

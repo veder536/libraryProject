@@ -61,3 +61,4 @@ class BookReviewForm(ModelForm):
         model = BookReview
         fields = ('body',)
         widgets = {'body': DateInput(attrs={'class': 'form-control'})}
+        

@@ -28,8 +28,10 @@ urlpatterns = [
     path('edit-review/<str:pk>', views.editreview, name="editreview"),
     path('delete-review/<str:pk>', views.deletereview, name="deletereview"),
     path('questions/', views.questions, name="questions"),
-    path('write-question/<str:pk>', views.write_question, name="writequestion"),
+    path('write-question/>', views.write_question, name="writequestion"),
     path('write-answer/<str:pk>', views.write_answer, name="writeanswer"),
+    path('answers/', views.answers, name="answers"),
+    
 
     # path('login/', views.loginPage, name="login")
 ]

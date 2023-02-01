@@ -1,0 +1,29 @@
+
+{% extends 'base/base.html' %}
+
+{% block header %}
+    <title>Author List</title>
+{% endblock %}
+    
+{% block content %}
+
+    <div class="container" style="width: 45%;">
+        <div class="card" style="width: 30;">
+            <ul class="list-group">
+                {% for  question in questions %}
+                    <a href="" class="link-dark" style="text-decoration: none;">
+                        <li class="list-group-item" >{{question.question}} 
+                            <br>
+                            <br>
+                            <a href="{% url 'base:writeanswer' question.id %}" class="btn btn-success btn-sm">answer</a>
+                            <button class="btn btn-danger btn-sm" onclick="confirmDeleteBook('{{book.id}}', '{{book.name}}')" class="btn btn-danger btn-sm">Delete</button>
+                        </li>
+                    </a>
+                    
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+{% endblock %}
+

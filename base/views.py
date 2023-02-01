@@ -2,6 +2,7 @@ from email.message import Message
 import imp
 from multiprocessing import context
 from re import A
+from time import process_time_ns
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import permission_required
@@ -77,13 +78,16 @@ def showauthor(request, pk):
 def showbook(request, pk):
     # formreview = BookReviewForm()
     book_info = Book.objects.filter(id = pk)
+    rented_copies = Rent.objects.filter(book_id = pk).count()
+    # book_copies_now = book_info.available_copies - rented_copies
     rented_by = Booking.objects.filter(book_id = pk)
     written_reviews = BookReview.objects.filter(book = pk, show = True)
     user_pending_reviews = BookReview.objects.filter(book = pk, show = False, user = request.user)
     print(rented_by)
     for user in rented_by:
         print(user.user.username)
-    context = {'book': book_info, 'rented_by': rented_by, 'writtenReviews': written_reviews, 'userpendingreviews': user_pending_reviews}
+    context = {'book': book_info, 'rented_by': rented_by, 'writtenReviews': written_reviews,
+               'userpendingreviews': user_pending_reviews}
     return render(request, 'base/show-book.html', context)
     
 
@@ -255,20 +259,32 @@ def deletereview(request, pk):
 def questions(request):
     questions_querry = AdminMessage.objects.filter(answer__isnull = True)
     context = {'questions': questions_querry}
-    return render(request, 'base/admin-questions', context)
+    return render(request, 'base/admin-questions.html', context)
 
 def write_question(request):
-    question = request.POST['question']
-    review = AdminMessage.objects.create(
-        user = request.user,
-        question = question
-    )
-    return redirect('base:writequestion')
+    if request.method == 'POST':
+        question = request.POST['question']
+        write_question = AdminMessage.objects.create(
+            user = request.user,
+            question = question
+        )
+        return redirect('base:writequestion')
+    return render(request, 'base/write-question.html')
 
 def write_answer(request, pk):
-    answer = request.POST['answer']
     admin_message = AdminMessage.objects.get(id = pk)
-    admin_message.admin = request.user.id
-    admin_message.anwer = answer
-    admin_message.save()
-    return redirect('base:reviews')
+    if request.method == 'POST':
+        answer = request.POST['answer']
+        print('here')
+        print(answer)
+        admin_message.repsonse_by = request.user.id
+        admin_message.answer = answer
+        admin_message.save()
+        return redirect('base:reviews')
+    context = {'question': admin_message}
+    return render(request, 'base/write-answer.html', context)
+
+def answers(request):
+    questions = AdminMessage.objects.filter(user = request.user, answer__isnull = False)
+    return render(request, 'base/user-side-question.html', context={"questions": questions})
+
